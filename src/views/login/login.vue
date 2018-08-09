@@ -29,10 +29,14 @@
   </div>
 </template>
 <script>
+import {login} from '../../service/login'
 export default{
   methods: {
     async login () {
-
+      let loginResult = await login('admin', 'admin')
+      if (loginResult) {
+        // console.log(loginResult)
+      }
     }
   }
 }
