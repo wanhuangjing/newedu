@@ -1,11 +1,16 @@
 <template>
   <div class="layadmin-user-login" id="LAY-user-login">
     <el-container>
-      <el-header>
-        <h2>{{ companyInfo.organizationname }}</h2>
-        <p>{{ companyInfo.watchword }}</p>
+      <el-header id="login-header">
+        <el-row>
+          <el-col :span="12" :offset="6"><h2>{{ companyInfo.organizationname }}</h2></el-col>
+        </el-row>
+
       </el-header>
       <el-main>
+        <el-row>
+          <el-col :span="12" :offset="6"><p>{{ companyInfo.watchword }}</p></el-col>
+        </el-row>
         <el-row :gutter="20">
           <el-col :span="6" :offset="8">
             <el-form ref="form" :model="form" label-width="80px">
@@ -16,7 +21,7 @@
                 <el-input type="password" v-model="form.user_password" placeholder="密码"></el-input>
               </el-form-item>
               <el-form-item label="记住密码">
-                <el-checkbox  v-model="form.remember"></el-checkbox>
+                <el-switch v-model="form.remember"></el-switch>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">登陆</el-button>
@@ -25,12 +30,17 @@
           </el-col>
         </el-row>
       </el-main>
-      <el-footer>
+      <el-footer id="login-footer">
           Copyright © 2018 上海瑞策软件有限公司 E-CRM7.0.0, all rights reserved.
       </el-footer>
     </el-container>
   </div>
 </template>
+<style lang="less">
+  #login-header, #login-footer{
+    text-align: center;
+  }
+</style>
 <script>
 import {login, getCompanyInfo} from '../../service/login'
 export default{
@@ -55,7 +65,7 @@ export default{
     async login () {
       let loginResult = await login('admin', 'admin')
       if (loginResult) {
-        // console.log(loginResult)
+        console.log(loginResult)
       }
     },
     onSubmit () {
@@ -63,6 +73,7 @@ export default{
     },
     async getCompanyInfo () {
       let companyInfo = await getCompanyInfo()
+      console.log(companyInfo)
       if (companyInfo.data) {
         this.companyInfo.organizationname = companyInfo.organizationname
         this.companyInfo.watchword = companyInfo.watchword
